@@ -1,7 +1,6 @@
 package com.yfbx.demo.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yfbx.demo.constant.Code;
 
 import java.util.List;
 
@@ -9,17 +8,20 @@ public class JsonUtils {
 
     private static ObjectMapper objectMapper;
 
+    private static int ERROR = -1;//服务端出错
+    private static int FAIL = 0;//由客户端参数导致的异常
+    private static int SUCCESS = 1;//请求成功
 
     public static String success(String msg) {
         EntityJson json = new EntityJson();
-        json.setCode(Code.SUCCESS);
+        json.setCode(SUCCESS);
         json.setMsg(msg);
         return toJson(json);
     }
 
     public static String success(String msg, Object data) {
         EntityJson json = new EntityJson();
-        json.setCode(Code.SUCCESS);
+        json.setCode(SUCCESS);
         json.setMsg(msg);
         json.setData(data);
         return toJson(json);
@@ -27,7 +29,7 @@ public class JsonUtils {
 
     public static String success(String msg, List<?> data) {
         ArrayJson json = new ArrayJson();
-        json.setCode(Code.SUCCESS);
+        json.setCode(SUCCESS);
         json.setMsg(msg);
         json.setData(data);
         return toJson(json);
@@ -35,14 +37,14 @@ public class JsonUtils {
 
     public static String fail(String msg) {
         EntityJson json = new EntityJson();
-        json.setCode(Code.FAIL);
+        json.setCode(FAIL);
         json.setMsg(msg);
         return toJson(json);
     }
 
     public static String error(String msg) {
         EntityJson json = new EntityJson();
-        json.setCode(Code.ERROR);
+        json.setCode(ERROR);
         json.setMsg(msg);
         return toJson(json);
     }
