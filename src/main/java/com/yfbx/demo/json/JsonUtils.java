@@ -6,8 +6,6 @@ import java.util.List;
 
 public class JsonUtils {
 
-    private static ObjectMapper objectMapper;
-
     private static int ERROR = -1;//服务端出错
     private static int FAIL = 0;//由客户端参数导致的异常
     private static int SUCCESS = 1;//请求成功
@@ -53,11 +51,8 @@ public class JsonUtils {
      * 解析json
      */
     public static <T> T fromJson(String content, Class<T> valueType) {
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
-        }
         try {
-            return objectMapper.readValue(content, valueType);
+            return new ObjectMapper().readValue(content, valueType);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,11 +63,8 @@ public class JsonUtils {
      * 生成json
      */
     public static String toJson(Object object) {
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
-        }
         try {
-            return objectMapper.writeValueAsString(object);
+            return new ObjectMapper().writeValueAsString(object);
         } catch (Exception e) {
             e.printStackTrace();
         }
