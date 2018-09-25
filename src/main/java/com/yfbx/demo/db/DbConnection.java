@@ -21,7 +21,7 @@ public class DbConnection {
         System.out.println(sql);
         try {
             // 注册 JDBC 驱动
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
             // 打开链接
             Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = connection.createStatement();
@@ -45,7 +45,7 @@ public class DbConnection {
         System.out.println(sql);
         try {
             // 注册 JDBC 驱动
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
             // 打开链接
             Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = connection.createStatement();
