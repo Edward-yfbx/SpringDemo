@@ -25,7 +25,7 @@ public class DbUtil {
         values.deleteCharAt(values.length() - 1);
 
         String sql = "INSERT INTO " + tableName + "(" + names + ")" + "VALUES" + "(" + values + ")";
-        return DbConnection.exeSql(sql);
+        return DbConnection.getInstance().exeSql(sql);
     }
 
     /**
@@ -41,7 +41,7 @@ public class DbUtil {
     public static <T> List<T> findAll(Class<T> clazz) {
         String tableName = clazz.getSimpleName().toLowerCase();
         String sql = "SELECT * FROM " + tableName + ";";
-        return DbConnection.exeQuery(sql, clazz);
+        return DbConnection.getInstance().exeQuery(sql, clazz);
     }
 
     /**
@@ -50,7 +50,7 @@ public class DbUtil {
     public <T> boolean clear(Class<T> clazz) {
         String tableName = clazz.getSimpleName().toLowerCase();
         String sql = "DELETE * FROM " + tableName + ";";
-        return DbConnection.exeSql(sql);
+        return DbConnection.getInstance().exeSql(sql);
     }
 
 }

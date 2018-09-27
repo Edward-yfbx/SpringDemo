@@ -125,7 +125,7 @@ public class WhereClause {
     public <T> List<T> find(Class<T> clazz) {
         String tableName = clazz.getSimpleName().toLowerCase();
         String sql = "SELECT * FROM " + tableName + builder;
-        return DbConnection.exeQuery(sql, clazz);
+        return DbConnection.getInstance().exeQuery(sql, clazz);
     }
 
     /**
@@ -134,7 +134,7 @@ public class WhereClause {
     public <T> T findFirst(Class<T> clazz) {
         String tableName = clazz.getSimpleName().toLowerCase();
         String sql = "SELECT * FROM " + tableName + builder;
-        List<T> list = DbConnection.exeQuery(sql, clazz);
+        List<T> list = DbConnection.getInstance().exeQuery(sql, clazz);
         if (list == null || list.size() <= 0) {
             return null;
         }
@@ -147,7 +147,7 @@ public class WhereClause {
     public <T> boolean delete(Class<T> clazz) {
         String tableName = clazz.getSimpleName().toLowerCase();
         String sql = "DELETE * FROM " + tableName + builder;
-        return DbConnection.exeSql(sql);
+        return DbConnection.getInstance().exeSql(sql);
     }
 
     /**
@@ -161,7 +161,7 @@ public class WhereClause {
         }
         set.deleteCharAt(set.length() - 1);
         String sql = "UPDATE " + tableName + " SET " + set + builder;
-        return DbConnection.exeSql(sql);
+        return DbConnection.getInstance().exeSql(sql);
     }
 
 

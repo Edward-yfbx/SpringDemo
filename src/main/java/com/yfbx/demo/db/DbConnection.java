@@ -1,9 +1,6 @@
 package com.yfbx.demo.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public class DbConnection {
@@ -13,19 +10,38 @@ public class DbConnection {
     private static final String USER = "root";
     private static final String PASS = "123456";
 
+    private static DbConnection instance;
+
+    public static DbConnection getInstance() {
+        if (instance == null) {
+            synchronized (DbConnection.class) {
+                if (instance == null) {
+                    instance = new DbConnection();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private DbConnection() {
+    }
+
+    /**
+     * 连接数据库
+     */
+    private Connection connect() throws ClassNotFoundException, SQLException {
+        Class.forName(JDBC_DRIVER);
+        return DriverManager.getConnection(DB_URL, USER, PASS);
+    }
 
     /**
      * 执行查询语句
      */
-    public static <T> List<T> exeQuery(String sql, Class<T> clazz) {
+    public <T> List<T> exeQuery(String sql, Class<T> clazz) {
         System.out.println(sql);
         try {
-            // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
-            // 打开链接
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection connection = connect();
             Statement stmt = connection.createStatement();
-            //执行语句
             ResultSet rs = stmt.executeQuery(sql);
             List<T> result = Converter.toList(rs, clazz);
             rs.close();
@@ -41,15 +57,11 @@ public class DbConnection {
     /**
      * 执行sql语句
      */
-    public static boolean exeSql(String sql) {
+    public boolean exeSql(String sql) {
         System.out.println(sql);
         try {
-            // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
-            // 打开链接
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection connection = connect();
             Statement stmt = connection.createStatement();
-            //执行语句
             stmt.execute(sql);
             stmt.close();
             connection.close();
