@@ -55,6 +55,26 @@ public class DbConnection {
     }
 
     /**
+     * 执行查询语句
+     */
+    public List<String> exeQuery(String sql) {
+        System.out.println(sql);
+        try {
+            Connection connection = connect();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            List<String> result = Converter.toStringList(rs);
+            rs.close();
+            stmt.close();
+            connection.close();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 执行sql语句
      */
     public boolean exeSql(String sql) {

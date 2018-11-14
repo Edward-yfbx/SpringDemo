@@ -129,6 +129,23 @@ public class WhereClause {
     }
 
     /**
+     * 查找(过滤重复数据)
+     */
+    public <T> List<T> findDistinct(Class<T> clazz, String... columns) {
+        String tableName = clazz.getSimpleName().toLowerCase();
+        StringBuilder col = new StringBuilder();
+        int len = columns.length;
+        for (int i = 0; i < len; i++) {
+            col.append(columns[i]);
+            if (i != len - 1) {
+                col.append(",");
+            }
+        }
+        String sql = "SELECT DISTINCT " + col + " FROM " + tableName + builder;
+        return DbConnection.getInstance().exeQuery(sql, clazz);
+    }
+
+    /**
      * 查找
      */
     public <T> T findFirst(Class<T> clazz) {

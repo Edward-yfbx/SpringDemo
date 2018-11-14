@@ -44,6 +44,29 @@ public class DbUtil {
         return DbConnection.getInstance().exeQuery(sql, clazz);
     }
 
+
+    /**
+     * 执行查找语句
+     */
+    public static <T> List<T> exeQuery(String sql, Class<T> clazz) {
+        return DbConnection.getInstance().exeQuery(sql, clazz);
+    }
+
+    /**
+     * 执行查找语句
+     */
+    public static List<String> exeQuery(String sql) {
+        return DbConnection.getInstance().exeQuery(sql);
+    }
+
+
+    /**
+     * 查找(过滤重复数据)
+     */
+    public static <T> List<T> findDistinct(Class<T> clazz, String... columns) {
+        return new WhereClause().findDistinct(clazz, columns);
+    }
+
     /**
      * 清空
      */

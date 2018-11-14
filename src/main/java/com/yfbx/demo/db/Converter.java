@@ -49,6 +49,17 @@ public class Converter {
     }
 
     /**
+     * 将ResultSet转换成List<String>
+     */
+    public static List<String> toStringList(ResultSet rs) throws SQLException {
+        List<String> list = new ArrayList<>();
+        while (rs.next()) {
+            list.add(rs.getString(1));
+        }
+        return list;
+    }
+
+    /**
      * Map转换成Bean
      */
     public static <T> T toBean(Map<String, Object> map, Class<T> clazz) {
